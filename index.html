@@ -2,18 +2,18 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Interactive CPU Scheduling Algorithm Simulator</title>
 <style>
-:root{--ink:#12263a;--bg:#f2f5f4;--teal:#0e8f83;--amb:#e8a33d;--red:#c8553d;--mut:#5b6b7a;--line:#d9e0e4}
+:root{--ink:#2b1d3a;--bg:#f6f2fa;--teal:#7a3fd1;--amb:#ff7a59;--red:#b3263e;--mut:#6b5b7b;--line:#e0d6ea}
 *{box-sizing:border-box}[hidden]{display:none!important}
 body{margin:0;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);display:flex}
 aside{width:220px;background:var(--ink);color:#dfe8ee;position:sticky;top:0;height:100vh;padding:20px 12px;flex:none}
 aside h1{font:700 19px/1.25 Georgia,serif;margin:0 8px 18px}
 aside a{display:block;padding:9px 12px;border-radius:8px;color:inherit;text-decoration:none}
-aside a:hover,aside a.on{background:#1f3b55;color:#fff}aside a span{display:inline-block;width:24px}
+aside a:hover,aside a.on{background:#47306a;color:#fff}aside a span{display:inline-block;width:24px}
 main{flex:1;min-width:0;padding:24px;max-width:1100px}
 section{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px;scroll-margin-top:12px}
 h2{font:700 22px Georgia,serif;margin:0 0 10px}h3{margin:18px 0 6px;font-size:16px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:14px}
-.stat{border-left:4px solid var(--teal);padding:8px 12px;background:#f3f9f8}.stat b{display:block;font:700 26px Georgia,serif}.stat small{color:var(--mut)}
+.stat{border-left:4px solid var(--teal);padding:8px 12px;background:#f6f1fd}.stat b{display:block;font:700 26px Georgia,serif}.stat small{color:var(--mut)}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:10px}.row>div{flex:1;min-width:110px}
 label{font-size:13px;color:var(--mut);display:block;margin-bottom:3px}
 input,select{padding:8px;border:1px solid var(--line);border-radius:8px;font:inherit;width:100%;background:#fff;color:var(--ink)}
@@ -22,28 +22,28 @@ button:hover{filter:brightness(1.1)}button.s{background:#e3eaee;color:var(--ink)
 button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--amb);outline-offset:1px}
 #msg{min-height:22px;font-size:14px}#msg.err{color:var(--red)}#msg.ok{color:var(--teal)}
 .tw{overflow-x:auto}table{border-collapse:collapse;width:100%}th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left}
-th{background:#eef3f5;font-weight:600}#ptab tbody tr{cursor:pointer}#ptab tr.sel{background:#fff6e0}
+th{background:#efe8f7;font-weight:600}#ptab tbody tr{cursor:pointer}#ptab tr.sel{background:#ffeee8}
 .bars{display:flex;padding:6px 0 28px}
 .blk{position:relative;height:58px;color:#fff;display:flex;align-items:center;justify-content:center;border-right:2px solid #fff;font-size:13px;font-weight:600;transition:opacity .3s,transform .3s}
 .blk i,.blk u{position:absolute;bottom:-23px;font:12px system-ui;color:var(--mut);text-decoration:none}.blk i{left:-4px}.blk u{right:-4px}
 .blk.fut{opacity:.25}.blk.act{transform:scaleY(1.2);box-shadow:0 0 0 3px var(--amb);z-index:1}
 .blk.idle{background:repeating-linear-gradient(45deg,#cfd6db,#cfd6db 6px,#e4e9ec 6px,#e4e9ec 12px);color:var(--ink)}
-#rtab tr.pend{opacity:.4}#rtab tr.run{opacity:1;background:#fff6e0}#rtab tr.arr td:nth-child(2){background:#dbe8fd;font-weight:700}#rtab tr.just{opacity:1}#rtab tr.just td:nth-child(n+4){background:#d4f1ec;font-weight:700}
+#rtab tr.pend{opacity:.4}#rtab tr.run{opacity:1;background:#ffeee8}#rtab tr.arr td:nth-child(2){background:#e2d9fb;font-weight:700}#rtab tr.just{opacity:1}#rtab tr.just td:nth-child(n+4){background:#d6f2dd;font-weight:700}
 #clock{font-weight:600;margin:8px 0}
 #log{max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:8px;margin-top:10px}
-#log div{padding:5px 10px;border-bottom:1px solid var(--line)}#log .now{background:#fff6e0}#log span{color:var(--mut);margin-right:8px;font-size:12px}
-pre{background:#0f1f2e;color:#d7e6f0;padding:12px;border-radius:8px;overflow:auto;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;margin:6px 0}
+#log div{padding:5px 10px;border-bottom:1px solid var(--line)}#log .now{background:#ffeee8}#log span{color:var(--mut);margin-right:8px;font-size:12px}
+pre{background:#1d1230;color:#eadff7;padding:12px;border-radius:8px;overflow:auto;font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace;margin:6px 0}
 details{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:6px 0}summary{cursor:pointer;font-weight:600}
 .kc{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}.kc>div{border:1px solid var(--line);border-radius:10px;padding:14px}
 .dg{display:grid;gap:4px;margin:10px 0}.dr{display:flex;gap:4px}.dr div{flex:1;padding:7px;text-align:center;border-radius:6px;font-size:12.5px}
-.u{background:#d8ecf7}.k{background:#cdeee9}.h{background:#cfd6db}.empty{color:var(--mut)}
+.u{background:#e3dcf9}.k{background:#fbdce6}.h{background:#ddd6e6}.empty{color:var(--mut)}
 @media(max-width:800px){body{display:block}aside{width:auto;height:auto;z-index:5;padding:8px}aside h1{display:none}aside nav{display:flex;overflow-x:auto;gap:4px}aside a{white-space:nowrap}main{padding:12px}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
 <aside><h1>CPU Scheduling Simulator</h1><nav id="nav"></nav></aside>
 <main>
 <section id="dash"><h2>Interactive CPU Scheduling Algorithm Simulator</h2>
-<p>Enter processes, pick an algorithm, and watch the CPU schedule build on a Gantt chart with a plain-English log. Built for the Operating Systems practical: FCFS, SJF, SRTF, Priority, Round Robin and MLFQ, plus a lab manual and kernel notes.</p><p><b>Prepared by Doulagar Shivaram</b>, Department of Information Technology, Vasavi College of Engineering. Operating Systems.</p>
+<p>Enter processes, pick an algorithm, and watch the CPU schedule build on a Gantt chart with a plain-English log. Built for the Operating Systems practical: FCFS, SJF, SRTF, Priority, Round Robin and MLFQ, plus a lab manual and kernel notes.</p><p><b>Prepared by Sneha Sirigiripeta.</b> Operating Systems.</p>
 <div class="stats"><div class="stat"><b id="sN">0</b><small>Total processes</small></div><div class="stat"><b id="sW">-</b><small>Average waiting time</small></div><div class="stat"><b id="sT">-</b><small>Average turnaround time</small></div><div class="stat"><b id="sC">-</b><small>CPU utilization</small></div></div></section>
 
 <section id="proc"><h2>Process Management</h2>
@@ -63,7 +63,7 @@ details{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin:6
 <h3>Step-by-step execution log</h3><div id="log" aria-live="polite"></div></section>
 
 <section id="res"><h2>Results</h2><div class="tw"><table id="rtab"><thead><tr><th>Process</th><th>Arrival Time</th><th>Burst Time</th><th>Completion Time</th><th>Turnaround Time</th><th>Waiting Time</th></tr></thead><tbody></tbody></table></div>
-<p id="avg"></p><p class="empty">While the Gantt chart plays: blue = process arrives, amber = process running, green = completion, turnaround and waiting time are fixed. Turnaround = Completion - Arrival. Waiting = Turnaround - Burst. CPU utilization = busy time / total schedule length (from time 0 to the last completion).</p></section>
+<p id="avg"></p><p class="empty">While the Gantt chart plays: purple = process arrives, orange = process running, green = completion, turnaround and waiting time are fixed. Turnaround = Completion - Arrival. Waiting = Turnaround - Burst. CPU utilization = busy time / total schedule length (from time 0 to the last completion).</p></section>
 
 <section id="lab"><h2>Lab Manual</h2><div id="labbody"></div></section>
 <section id="kern"><h2>Kernel Architectures</h2><p>This is a separate topic from CPU scheduling: it describes how the operating system's own code is organized.</p><div class="kc" id="kc"></div></section>
@@ -114,7 +114,7 @@ const $=s=>document.querySelector(s),SAMPLE=[['P1',0,5,2],['P2',1,3,1],['P3',2,8
 const RULES={FCFS:'FCFS: the process that arrived first runs first and keeps the CPU until it finishes (non-preemptive).',SJF:'SJF: when the CPU is free, pick the arrived process with the smallest burst time and run it to completion (non-preemptive).',SRTF:'SRTF: at every time unit, run the arrived process with the least remaining time. A newly arrived shorter job preempts the running one.',PRIORITY:'Priority: when the CPU is free, pick the arrived process with the highest priority (smallest priority number) and run it to completion.',RR:'Round Robin: processes take turns in arrival order, each for at most one time quantum; unfinished processes go to the back of the queue.',MLFQ:'MLFQ: three queues. New processes enter queue 1 (time slice 2). A process that uses its full slice moves down: queue 2 has slice 4, queue 3 is FCFS. The CPU always serves the highest non-empty queue, and a process in a higher queue preempts a lower one.'};
 let procs=[],res=null,T=0,timer=null,sel=null;
 const msg=(t,c)=>{const m=$('#msg');m.textContent=t;m.className=c||'err'};
-const col=id=>`hsl(${procs.findIndex(p=>p.id===id)*47%360},60%,40%)`;
+const col=id=>`hsl(${(procs.findIndex(p=>p.id===id)*47+260)%360},55%,42%)`;
 function nextId(){let k=1;while(procs.some(p=>p.id==='P'+k))k++;$('#fi').value='P'+k}
 function rTab(){$('#ptab tbody').innerHTML=procs.map(p=>`<tr data-id="${p.id}" class="${sel===p.id?'sel':''}"><td>${p.id}</td><td>${p.at}</td><td>${p.bt}</td><td>${p.pr}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">No processes yet. Add one or load sample data.</td></tr>'}
 $('#ptab').onclick=e=>{const r=e.target.closest('tr[data-id]');if(!r)return;const p=procs.find(x=>x.id===r.dataset.id);sel=p.id;$('#fi').value=p.id;$('#fa').value=p.at;$('#fb').value=p.bt;$('#fp').value=p.pr;rTab()};
